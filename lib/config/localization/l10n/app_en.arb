@@ -1,0 +1,28 @@
+{
+  "@@locale": "en",
+
+  "hello": "Hello",
+  "@hello": {
+    "description": "Greeting word"
+  },
+
+  "thankYou": "Thank you",
+  "@thankYou": {
+    "description": "Expression of gratitude"
+  },
+
+  "yes": "Yes",
+  "no": "No",
+
+  "please": "Please",
+  "sorry": "Sorry",
+
+  "water": "Water",
+  "food": "Food",
+
+  "house": "House",
+  "friend": "Friend",
+
+  "book": "Book",
+  "school": "School"
+}
