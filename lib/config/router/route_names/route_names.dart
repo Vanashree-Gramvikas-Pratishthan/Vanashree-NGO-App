@@ -2,5 +2,7 @@
 
 class RouteNames {
   static const startApp = '/app';
+  static const onboarding = '/onboarding';
+  static const language = '/language';
   // static final error = ErrorRouteNames();
 }

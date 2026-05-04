@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/localization/l10n/app_localizations.dart';
 import 'config/router/app_router.dart';
+import 'config/theme/app_theme.dart';
+import 'config/theme/providers/theme_provider.dart';
 import 'features/localization/presentation/providers/language_view_model.dart';
 
 void main() {
@@ -37,9 +39,9 @@ class MyApp extends StatelessWidget {
             Locale('mr'), // Marathi
           ],
           locale: locale,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          ),
+          theme: AppTheme.lightTheme(),
+          darkTheme: AppTheme.darkTheme(),
+          themeMode: ref.watch(themeModeProvider),
           routerConfig: router,
         );
       },

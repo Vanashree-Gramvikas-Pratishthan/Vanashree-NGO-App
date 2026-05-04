@@ -22,6 +22,8 @@ class LanguageViewModel extends AsyncNotifier<Language> {
     return savedLanguage ?? const Language(Constants.en);
   }
 
+  String get code => state.value?.code ?? Constants.en;
+
   Future<void> changeLanguage(Language language) async {
     state = const AsyncValue.loading();
     await _saveLanguageUseCase.execute(language);

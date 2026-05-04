@@ -5,4 +5,5 @@ class SecureStorageConstants {
   // static const String userId = 'userId';
   // static const String theme = 'theme';
   static const String locale = 'locale';
+  static const String onboardingSeen = 'onboarding_seen';
 }
