@@ -151,6 +151,84 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
+
+/// A production-safe singleton logger built on top of the `logger` package.
+///
+/// This logger provides:
+/// - Pretty console output (colors, emojis, timestamps)
+/// - Multiple log levels (debug, info, warning, error, verbose, fatal)
+/// - In-memory log buffering for debugging purposes
+/// - Centralized logging across the entire app
+///
+/// ---
+///
+/// ## 🔥 Build Behavior
+///
+/// - **Debug/Profile mode**
+///   - Logs are printed to console
+///   - Logs are stored in an in-memory buffer (max ~300 entries recommended by usage)
+///   - Useful for debugging and inspecting runtime behavior
+///
+/// - **Release mode**
+///   - Logging calls should ideally be stripped or minimized by compiler optimizations
+///   - No sensitive or verbose logs should be included in production builds
+///
+/// ---
+///
+/// ## 📦 Features
+///
+/// ✔ Singleton instance (global access via `AppLogger()`)
+/// ✔ Structured logs with levels:
+///    - debug
+///    - info
+///    - warning
+///    - error
+///    - verbose (trace)
+///    - fatal (wtf)
+/// ✔ Error + StackTrace support
+/// ✔ In-memory log history (for debugging tools / support screens)
+///
+/// ---
+///
+/// ## 🚀 Usage
+///
+/// ```dart
+/// final logger = AppLogger();
+///
+/// logger.debug('Auth', 'User clicked login button');
+///
+/// logger.info('Auth', 'Login request sent');
+///
+/// logger.warning('Auth', 'Token is near expiry');
+///
+/// logger.error('Auth', 'Login failed', error, stackTrace);
+///
+/// logger.verbose('Network', 'Request payload logged');
+/// ```
+///
+/// ---
+///
+/// ## 📥 Retrieve Logs
+///
+/// You can fetch all stored logs for debugging:
+///
+/// ```dart
+/// String logs = AppLogger().getLogs();
+/// ```
+///
+/// Useful for:
+/// - Debug screens
+/// - Bug reporting
+/// - Support diagnostics
+///
+/// ---
+///
+/// ## ⚠️ Notes
+///
+/// - Avoid logging sensitive data (passwords, tokens)
+/// - Use `error()` for exceptions and failures
+/// - Use `debug()` for development-only tracing
+/// - Consider clearing buffer if memory usage becomes large
 class AppLogger {
   static final AppLogger _instance = AppLogger._internal();
 

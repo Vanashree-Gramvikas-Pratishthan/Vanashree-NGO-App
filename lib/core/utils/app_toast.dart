@@ -1,5 +1,56 @@
 import 'package:flutter/material.dart';
 
+/// A utility class for showing toast messages in the app.
+///
+/// Provides methods to display different types of toasts:
+/// - Success
+/// - Error
+/// - Warning
+/// - Info
+///
+/// Each toast supports a custom message and icon.
+///
+/// The toast automatically dismisses after a short duration (default: ~2 seconds).
+///
+/// ---
+///
+/// ## Example Usage
+///
+/// ```dart
+/// AppToast.showSuccess(
+///   context,
+///   message: 'Data saved successfully!',
+///   icon: Icons.check_circle,
+/// );
+///
+/// AppToast.showError(
+///   context,
+///   message: 'Failed to save data.',
+///   icon: Icons.error,
+/// );
+///
+/// AppToast.showWarning(
+///   context,
+///   message: 'Please check your input.',
+///   icon: Icons.warning,
+/// );
+///
+/// AppToast.showInfo(
+///   context,
+///   message: 'New update available.',
+///   icon: Icons.info,
+/// );
+/// ```
+///
+/// ---
+///
+/// ## Notes
+/// - Use success for successful operations
+/// - Use error for failures or exceptions
+/// - Use warning for user input or validation issues
+/// - Use info for neutral or informational messages
+///
+/// Keep messages short and user-friendly.
 class AppToast {
   static void showSuccess(
     BuildContext context, {
