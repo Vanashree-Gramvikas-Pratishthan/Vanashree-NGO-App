@@ -1,31 +1,48 @@
 import 'package:flutter/material.dart';
 
 class AppToast {
-  static void showSuccess(BuildContext context,
-      {String message = 'Success! Operation completed.'}) {
-    showToast(context, message, ToastType.success);
+  static void showSuccess(
+    BuildContext context, {
+    String message = 'Success! Operation completed.',
+    IconData? icon,
+  }) {
+    showToast(context, message, icon, ToastType.success);
   }
 
-  static void showError(BuildContext context,
-      {String message = 'Error! Something went wrong.'}) {
-    showToast(context, message, ToastType.error);
+  static void showError(
+    BuildContext context, {
+    String message = 'Error! Something went wrong.',
+    IconData? icon,
+  }) {
+    showToast(context, message, icon, ToastType.error);
   }
 
-  static void showWarning(BuildContext context,
-      {String message = 'Warning! Something needs attention.'}) {
-    showToast(context, message, ToastType.warning);
+  static void showWarning(
+    BuildContext context, {
+    String message = 'Warning! Something needs attention.',
+    IconData? icon,
+  }) {
+    showToast(context, message, icon, ToastType.warning);
   }
 
-  static void showInfo(BuildContext context,
-      {String message = 'Info! Please check the details.'}) {
-    showToast(context, message, ToastType.info);
+  static void showInfo(
+    BuildContext context, {
+    String message = 'Info! Please check the details.',
+    IconData? icon
+  }) {
+    showToast(context, message, icon, ToastType.info);
   }
 }
 
 enum ToastType { success, error, warning, info }
 
 // Function to show toast messages
-void showToast(BuildContext context, String message, ToastType type) {
+void showToast(
+  BuildContext context,
+  String message,
+  IconData? icon,
+  ToastType type,
+) {
   final overlay = Overlay.of(context);
   final overlayEntry = OverlayEntry(
     builder: (context) => Positioned(
@@ -37,16 +54,25 @@ void showToast(BuildContext context, String message, ToastType type) {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           decoration: BoxDecoration(
-            color:
-                _getBackgroundColor(type), // Set background color based on type
+            color: _getBackgroundColor(
+              type,
+            ), // Set background color based on type
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Text(
-            message,
-            style: const TextStyle(
-              color: Colors.white, // White text color for contrast
-              fontSize: 16,
-            ),
+          child: Row(
+            spacing: 8,
+            children: [
+              Icon(icon, color: Colors.white), // Icon based on toast type
+              Expanded(
+                child: Text(
+                  message,
+                  style: const TextStyle(
+                    color: Colors.white, // White text color for contrast
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -73,8 +99,8 @@ Color _getBackgroundColor(ToastType type) {
     case ToastType.info:
       return Colors.blue.withValues(alpha: 0.8); // Blue for info
     default:
-      return Colors.black.withValues(alpha: 0.8); // Default black for unknown types
+      return Colors.black.withValues(
+        alpha: 0.8,
+      ); // Default black for unknown types
   }
 }
-
-

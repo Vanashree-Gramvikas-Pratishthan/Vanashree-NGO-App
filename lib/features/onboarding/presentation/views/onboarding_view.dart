@@ -97,7 +97,7 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
                         CircleAvatar(
                           radius: 52,
                           backgroundColor: theme.colorScheme.primary
-                              .withOpacity(0.12),
+                              .withValues(alpha: 0.12),
                           child: Icon(
                             screen.icon,
                             size: 56,
@@ -117,7 +117,7 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
                           screen.description,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodyLarge?.copyWith(
-                            color: theme.colorScheme.onSurface.withOpacity(
+                            color: theme.colorScheme.onSurface.withValues(alpha: 
                               0.75,
                             ),
                           ),
@@ -144,7 +144,7 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
                         decoration: BoxDecoration(
                           color: _currentPage == index
                               ? theme.colorScheme.primary
-                              : theme.colorScheme.onSurface.withOpacity(0.24),
+                              : theme.colorScheme.onSurface.withValues(alpha: 0.24),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
