@@ -13,17 +13,14 @@ class AppStartStorage implements IAppStartStorage {
 
   @override
   Future<bool> loadOnboardingStatus() async {
-    final raw = await _secureStorage.getString(
+    final onboardingSeen = await _secureStorage.getBool(
       SecureStorageConstants.onboardingSeen,
     );
-    return raw == 'true';
+    return onboardingSeen ?? false; // Default to false if not set
   }
 
   @override
   Future<void> saveOnboardingSeen() async {
-    await _secureStorage.saveString(
-      SecureStorageConstants.onboardingSeen,
-      'true',
-    );
+    await _secureStorage.saveBool(SecureStorageConstants.onboardingSeen, true);
   }
 }
