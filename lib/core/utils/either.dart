@@ -1,7 +1,5 @@
 /// A simple FP-style Either implementation (fpdart-like)
 /// Left = Failure, Right = Success
-library;
-
 sealed class Either<L, R> {
   const Either();
 
