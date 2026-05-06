@@ -11,6 +11,8 @@ extension BuildContextExt on BuildContext {
 
   TextTheme get textTheme => Theme.of(this).textTheme;
 
+  ThemeData get theme => Theme.of(this);
+
   bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
 
   /// Get app bar theme color
@@ -84,4 +86,3 @@ extension BuildContextExt on BuildContext {
 //   /// Pop current route
 //   void pop<T extends Object?>([T? result]) => Navigator.of(this).pop(result);
 // }
-

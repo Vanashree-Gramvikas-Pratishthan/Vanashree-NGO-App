@@ -76,6 +76,7 @@ class AppTheme {
 
   static ThemeData lightTheme() {
     return ThemeData(
+      fontFamily: "Manrope",
       useMaterial3: true,
       colorScheme: lightColorScheme,
       brightness: Brightness.light,
@@ -104,7 +105,7 @@ class AppTheme {
       // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: lightSurface,
+        fillColor: const Color(0xffE5E2DC),
         hintStyle: const TextStyle(color: lightHint, fontSize: 14),
         labelStyle: const TextStyle(color: lightPrimary, fontSize: 14),
         contentPadding: const EdgeInsets.symmetric(
@@ -319,9 +320,8 @@ class AppTheme {
           return Colors.transparent;
         }),
         checkColor: const WidgetStatePropertyAll(lightOnPrimary),
-        side:
-             const BorderSide(color: lightPrimary),
-          //  const BorderSide(color: lightBorder);
+        side: const BorderSide(color: lightPrimary),
+        //  const BorderSide(color: lightBorder);
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
 
@@ -403,6 +403,7 @@ class AppTheme {
 
   static ThemeData darkTheme() {
     return ThemeData(
+      fontFamily: "Manrope",
       useMaterial3: true,
       colorScheme: darkColorScheme,
       brightness: Brightness.dark,

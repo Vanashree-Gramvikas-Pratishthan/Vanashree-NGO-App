@@ -1,3 +1,5 @@
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +12,16 @@ import 'features/localization/presentation/providers/language_view_model.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    ProviderScope(
+      child: DevicePreview(
+        enabled: kDebugMode,
+        builder: (context) {
+          return const MyApp();
+        },
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +35,7 @@ class MyApp extends StatelessWidget {
         final locale = localeState.value != null
             ? Locale(localeState.value!.code)
             : const Locale('en');
+        final theme = ref.watch(themeModeProvider);
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Vanashree',
@@ -41,7 +53,7 @@ class MyApp extends StatelessWidget {
           locale: locale,
           theme: AppTheme.lightTheme(),
           darkTheme: AppTheme.darkTheme(),
-          themeMode: ref.watch(themeModeProvider),
+          themeMode: theme,
           routerConfig: router,
         );
       },

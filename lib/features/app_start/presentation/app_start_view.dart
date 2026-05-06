@@ -43,7 +43,7 @@ class _AppStartViewState extends ConsumerState<AppStartView> {
               //   context.go(RouteNames.noInternet);
               //   break;
               default:
-                context.go(RouteNames.language);
+                context.go(RouteNames.auth.login);
             }
           });
         },

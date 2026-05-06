@@ -6,6 +6,7 @@ import '../../features/app_start/presentation/app_start_view.dart';
 import '../../features/localization/presentation/views/language_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import 'route_names/route_names.dart';
+import 'routes/auth_routes.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -25,6 +26,8 @@ final router = GoRouter(
       path: RouteNames.language,
       builder: (context, state) => const LanguageView(),
     ),
+    ...authRoutes,
+    // ...errorRoutes,
   ],
   errorBuilder: (context, state) => ErrorPage(message: state.error!.message),
 );
