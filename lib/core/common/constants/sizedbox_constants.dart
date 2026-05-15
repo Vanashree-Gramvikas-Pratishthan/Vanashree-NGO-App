@@ -6,4 +6,3 @@ class Spacing extends SizedBox {
 
   const Spacing.horizontal(double width, {super.key}) : super(width: width);
 }
-

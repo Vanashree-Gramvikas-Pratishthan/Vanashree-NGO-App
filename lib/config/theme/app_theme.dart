@@ -319,9 +319,8 @@ class AppTheme {
           return Colors.transparent;
         }),
         checkColor: const WidgetStatePropertyAll(lightOnPrimary),
-        side:
-             const BorderSide(color: lightPrimary),
-          //  const BorderSide(color: lightBorder);
+        side: const BorderSide(color: lightPrimary),
+        //  const BorderSide(color: lightBorder);
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
       ),
 

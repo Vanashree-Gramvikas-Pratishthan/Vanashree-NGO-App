@@ -12,21 +12,17 @@ final themeStorageProvider = Provider<IThemeStorage>((ref) {
   return ThemeStorage(secureStorageService);
 });
 
-final themeRepositoryProvider = Provider<IThemeRepository>((ref){
+final themeRepositoryProvider = Provider<IThemeRepository>((ref) {
   final themeStorage = ref.watch(themeStorageProvider);
   return ThemeRepository(themeStorage);
 });
 
-final loadThemeUseCaseProvider = Provider<LoadThemeUseCase>(
-  (ref) {
-    final repository = ref.watch(themeRepositoryProvider);
-    return LoadThemeUseCaseImpl(repository);
-  },
-);
+final loadThemeUseCaseProvider = Provider<LoadThemeUseCase>((ref) {
+  final repository = ref.watch(themeRepositoryProvider);
+  return LoadThemeUseCaseImpl(repository);
+});
 
-final saveThemeUseCaseProvider = Provider<SaveThemeUseCase>(
-  (ref) {
-    final repository = ref.watch(themeRepositoryProvider);
-    return SaveThemeUseCaseImpl(repository);
-  },
-);
+final saveThemeUseCaseProvider = Provider<SaveThemeUseCase>((ref) {
+  final repository = ref.watch(themeRepositoryProvider);
+  return SaveThemeUseCaseImpl(repository);
+});
