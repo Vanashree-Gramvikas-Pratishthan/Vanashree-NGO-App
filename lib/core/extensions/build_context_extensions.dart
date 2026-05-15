@@ -84,4 +84,3 @@ extension BuildContextExt on BuildContext {
 //   /// Pop current route
 //   void pop<T extends Object?>([T? result]) => Navigator.of(this).pop(result);
 // }
-

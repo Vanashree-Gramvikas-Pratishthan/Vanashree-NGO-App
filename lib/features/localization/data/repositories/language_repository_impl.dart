@@ -1,7 +1,7 @@
 import 'package:vanashree_ngo_application/features/localization/domain/entities/language.dart';
 import 'package:vanashree_ngo_application/features/localization/domain/repositories/language_repository.dart';
 
-import 'language_storage.dart';
+import '../data_sources/language_storage.dart';
 
 class LanguageRepositoryImpl implements LanguageRepository {
   final ILanguageStorage _languageStorage;

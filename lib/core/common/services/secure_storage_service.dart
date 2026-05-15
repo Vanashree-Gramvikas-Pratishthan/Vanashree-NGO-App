@@ -19,16 +19,15 @@ class SecureStorageService implements ISecureStorageService {
   Future<String?> getString(String key) async {
     return await _storage.read(key: key);
   }
-  
+
   @override
   Future<bool?> getBool(String key) async {
     final value = await _storage.read(key: key);
     return value != null ? value == 'true' : null;
   }
-  
+
   @override
   Future<void> saveBool(String key, bool value) async {
     await _storage.write(key: key, value: value.toString());
   }
-
 }

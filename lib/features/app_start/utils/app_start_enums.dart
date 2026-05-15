@@ -1,6 +1,1 @@
-enum AppStartState {
-  onboarding,
-  unauthenticated,
-  authenticated,
-  noInternet,
-}
+enum AppStartState { onboarding, unauthenticated, authenticated, noInternet }
