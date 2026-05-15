@@ -18,9 +18,9 @@ extension BuildContextExt on BuildContext {
   /// Get app bar theme color
   Color? get appBarColor => Theme.of(this).appBarTheme.backgroundColor;
 
-  double get width => MediaQuery.of(this).size.width;
+  double get width => MediaQuery.sizeOf(this).width;
 
-  double get height => MediaQuery.of(this).size.height;
+  double get height => MediaQuery.sizeOf(this).height;
 
   /// Show snackbar with message
   void showSnackBar(

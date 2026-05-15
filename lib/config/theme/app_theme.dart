@@ -74,7 +74,7 @@ class AppTheme {
     surfaceBright: Color(0xFF3D4C42),
   );
 
-  static ThemeData lightTheme() {
+  static ThemeData get lightTheme {
     return ThemeData(
       fontFamily: "Manrope",
       useMaterial3: true,
@@ -91,7 +91,7 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 4,
         centerTitle: false,
-        iconTheme: IconThemeData(color: lightOnPrimary),
+        iconTheme: IconThemeData(color: lightPrimary),
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w600,
@@ -401,7 +401,7 @@ class AppTheme {
     );
   }
 
-  static ThemeData darkTheme() {
+  static ThemeData get darkTheme {
     return ThemeData(
       fontFamily: "Manrope",
       useMaterial3: true,

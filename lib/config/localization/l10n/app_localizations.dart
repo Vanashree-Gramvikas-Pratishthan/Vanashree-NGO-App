@@ -8,6 +8,7 @@ import 'package:intl/intl.dart' as intl;
 import 'app_localizations_en.dart';
 import 'app_localizations_hi.dart';
 import 'app_localizations_mr.dart';
+import 'app_localizations_ne.dart';
 
 // ignore_for_file: type=lint
 
@@ -98,6 +99,7 @@ abstract class AppLocalizations {
     Locale('en'),
     Locale('hi'),
     Locale('mr'),
+    Locale('ne'),
   ];
 
   /// Greeting word
@@ -171,6 +173,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'School'**
   String get school;
+
+  /// No description provided for @welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'welcome Back!'**
+  String get welcome_back;
+
+  /// No description provided for @login_message.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue your journey as a guardian of of the grove.'**
+  String get login_message;
+
+  /// No description provided for @email_or_mobile.
+  ///
+  /// In en, this message translates to:
+  /// **'EMAIL OR MOBILE'**
+  String get email_or_mobile;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'PASSWORD'**
+  String get password;
+
+  /// No description provided for @forgot_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgot_password;
+
+  /// No description provided for @sign_in.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get sign_in;
+
+  /// No description provided for @or_continue_with.
+  ///
+  /// In en, this message translates to:
+  /// **'OR CONTINUE WITH'**
+  String get or_continue_with;
+
+  /// No description provided for @new_to_vanashree.
+  ///
+  /// In en, this message translates to:
+  /// **'New to Vanashree? '**
+  String get new_to_vanashree;
+
+  /// No description provided for @sign_up_for_an_account.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up For An Account'**
+  String get sign_up_for_an_account;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @select_language.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get select_language;
+
+  /// No description provided for @please_enter_your_email_or_mobile_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email or mobile number'**
+  String get please_enter_your_email_or_mobile_number;
+
+  /// No description provided for @please_enter_your_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get please_enter_your_password;
+
+  /// No description provided for @password_must_be_at_least_6_charecters_long.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters long'**
+  String get password_must_be_at_least_6_charecters_long;
+
+  /// No description provided for @sign_up1_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Begin your\nbotanical journey.'**
+  String get sign_up1_title;
+
+  /// No description provided for @sign_up1_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to join our living\narchive of native seedlings and\nconservation efforts.'**
+  String get sign_up1_description;
+
+  /// No description provided for @full_name.
+  ///
+  /// In en, this message translates to:
+  /// **'FULL NAME'**
+  String get full_name;
+
+  /// No description provided for @email_address.
+  ///
+  /// In en, this message translates to:
+  /// **'EMAIL ADDRESS'**
+  String get email_address;
+
+  /// No description provided for @mobile_number.
+  ///
+  /// In en, this message translates to:
+  /// **'MOBILE NUMBER'**
+  String get mobile_number;
+
+  /// No description provided for @security_and_trust.
+  ///
+  /// In en, this message translates to:
+  /// **'Security & Trust'**
+  String get security_and_trust;
+
+  /// No description provided for @security_and_trust_description.
+  ///
+  /// In en, this message translates to:
+  /// **'We protect your data like we protect our forests.'**
+  String get security_and_trust_description;
+
+  /// No description provided for @next_step.
+  ///
+  /// In en, this message translates to:
+  /// **'Next Step'**
+  String get next_step;
+
+  /// No description provided for @sign_up2_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Where are you\ngrowing?'**
+  String get sign_up2_title;
+
+  /// No description provided for @sign_up2_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us tailor your reforestation journey by sharing your local ecosystem.'**
+  String get sign_up2_description;
+
+  /// No description provided for @country.
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get country;
+
+  /// No description provided for @state.
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get state;
+
+  /// No description provided for @city.
+  ///
+  /// In en, this message translates to:
+  /// **'City'**
+  String get city;
+
+  /// No description provided for @back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get back;
+
+  /// No description provided for @sign_up3_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell us your story.'**
+  String get sign_up3_title;
+
+  /// No description provided for @sign_up3_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Your journey with native flora matters. Share\nyour vision and help us map the future of our\nlocal ecosystems.'**
+  String get sign_up3_description;
+
+  /// No description provided for @your_bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Bio'**
+  String get your_bio;
+
+  /// No description provided for @complete_onboarding.
+  ///
+  /// In en, this message translates to:
+  /// **'COMPLETE ONBOARDING'**
+  String get complete_onboarding;
+
+  /// No description provided for @please_enter_your_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get please_enter_your_name;
+
+  /// No description provided for @please_enter_your_email.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get please_enter_your_email;
+
+  /// No description provided for @please_enter_your_mobile_number.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your mobile number'**
+  String get please_enter_your_mobile_number;
+
+  /// No description provided for @please_select_a_country.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a country'**
+  String get please_select_a_country;
+
+  /// No description provided for @please_select_a_state.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a state'**
+  String get please_select_a_state;
+
+  /// No description provided for @please_select_a_city.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a city'**
+  String get please_select_a_city;
+
+  /// No description provided for @please_enter_your_bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your bio'**
+  String get please_enter_your_bio;
 }
 
 class _AppLocalizationsDelegate
@@ -184,7 +420,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['en', 'hi', 'mr'].contains(locale.languageCode);
+      <String>['en', 'hi', 'mr', 'ne'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -199,6 +435,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsHi();
     case 'mr':
       return AppLocalizationsMr();
+    case 'ne':
+      return AppLocalizationsNe();
   }
 
   throw FlutterError(

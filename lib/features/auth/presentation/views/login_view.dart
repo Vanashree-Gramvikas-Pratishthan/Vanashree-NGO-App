@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vanashree_ngo_application/config/router/route_names/route_names.dart';
 import 'package:vanashree_ngo_application/core/extensions/build_context_extensions.dart';
 
-import '../../../../config/theme/providers/theme_provider.dart';
-import '../../../common/constants/app_colors.dart';
-import '../../../common/constants/app_icons.dart';
-import '../../../common/constants/sizedbox_constants.dart';
+import '../../../../core/common/components/app_textfield.dart';
+import '../../../../core/common/components/primary_button.dart';
+import '../../../../core/common/constants/app_colors.dart';
+import '../../../../core/common/constants/app_icons.dart';
+import '../../../../core/common/constants/sizedbox_constants.dart';
+import '../widgets/login_end_drawer.dart';
 import '../widgets/login_secondary_button.dart';
 
 class LogInView extends ConsumerStatefulWidget {
@@ -19,17 +23,22 @@ class LogInView extends ConsumerStatefulWidget {
 class _LogInViewState extends ConsumerState<LogInView> {
   late final ValueNotifier<bool> _isPasswordVisible;
   late final GlobalKey<FormState> _formKey;
+  late final TextEditingController _emailOrPhoneController, _passwordController;
   @override
   void initState() {
     super.initState();
     _isPasswordVisible = ValueNotifier<bool>(false);
     _formKey = GlobalKey<FormState>();
+    _emailOrPhoneController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
     _isPasswordVisible.dispose();
     _formKey.currentState?.dispose();
+    _emailOrPhoneController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -55,29 +64,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
           ),
           backgroundColor: context.theme.scaffoldBackgroundColor,
         ),
-        endDrawer: Drawer(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 48.0),
-            child: Column(
-              children: [
-                ListTile(
-                  title: const Text('Dark theme'),
-                  trailing: Consumer(
-                    builder: (context, ref, child) {
-                      final themeMode = ref.watch(themeModeProvider);
-                      return Switch(
-                        value: themeMode == ThemeMode.dark,
-                        onChanged: (value) {
-                          ref.read(themeModeProvider.notifier).toggleTheme();
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        endDrawer: const LoginEndDrawer(),
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -87,7 +74,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                 SvgPicture.asset(AppIcons.loginWelcome),
                 const Spacing.vertical(24),
                 Text(
-                  'Welcome Back!',
+                  context.l10n.welcome_back,
                   style: context.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w900,
                     color: AppColors.titleTextColor,
@@ -95,26 +82,26 @@ class _LogInViewState extends ConsumerState<LogInView> {
                 ),
                 const Spacing.vertical(8),
                 Text(
-                  'Continue your journey as a guardian of the grove.',
+                  context.l10n.login_message,
                   textAlign: TextAlign.center,
                   style: context.textTheme.bodyLarge?.copyWith(
                     color: AppColors.bodyTextColor,
                   ),
                 ),
                 const Spacing.vertical(16),
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
-
-                  child: Text('EMAIL OR MOBILE'),
+                  child: Text(context.l10n.email_or_mobile),
                 ),
                 const Spacing.vertical(8),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'name@forest.org',
-                  ),
+                AppTextField(
+                  controller: _emailOrPhoneController,
+                  hintText: 'name@forest.org',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email or mobile number';
+                      return context
+                          .l10n
+                          .please_enter_your_email_or_mobile_number;
                     }
 
                     return null;
@@ -124,11 +111,11 @@ class _LogInViewState extends ConsumerState<LogInView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('PASSWORD'),
+                    Text(context.l10n.password),
                     GestureDetector(
                       onTap: () {},
                       child: Text(
-                        'Forgot Password?',
+                        context.l10n.forgot_password,
                         style: context.textTheme.labelLarge,
                       ),
                     ),
@@ -138,27 +125,28 @@ class _LogInViewState extends ConsumerState<LogInView> {
                 ValueListenableBuilder(
                   valueListenable: _isPasswordVisible,
                   builder: (context, passwordVisible, child) {
-                    return TextFormField(
-                      obscureText: passwordVisible,
-                      decoration: InputDecoration(
-                        hintText: '********',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () {
-                            _togglePasswordVisibility();
-                          },
+                    return AppTextField(
+                      controller: _passwordController,
+                      isObsecure: passwordVisible,
+                      hintText: '********',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
+                        onPressed: () {
+                          _togglePasswordVisibility();
+                        },
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
+                          return context.l10n.please_enter_your_password;
                         }
                         if (value.length < 6) {
-                          return 'Password must be at least 6 characters long';
+                          return context
+                              .l10n
+                              .password_must_be_at_least_6_charecters_long;
                         }
                         return null;
                       },
@@ -166,37 +154,19 @@ class _LogInViewState extends ConsumerState<LogInView> {
                   },
                 ),
                 const Spacing.vertical(32),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        // Perform login action
-                      }
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Sign In   ",
-                              style: context.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const WidgetSpan(
-                              child: Icon(Icons.arrow_forward, size: 16),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                PrimaryButton(
+                  backgroundColor: context.colorScheme.primary,
+                  textColor: context.colorScheme.onPrimary,
+                  title: context.l10n.sign_in,
+                  suffixIcon: Icons.arrow_forward,
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      // Process login
+                    }
+                  },
                 ),
                 const Spacing.vertical(32),
-                const Text('OR CONTINUE WITH'),
+                Text(context.l10n.or_continue_with),
                 const Spacing.vertical(32),
                 const Row(
                   spacing: 32,
@@ -220,15 +190,14 @@ class _LogInViewState extends ConsumerState<LogInView> {
                   text: TextSpan(
                     style: Theme.of(context).textTheme.bodyMedium,
                     children: [
-                      const TextSpan(text: 'New to Vanashree? '),
+                      TextSpan(text: context.l10n.new_to_vanashree),
                       WidgetSpan(
                         child: GestureDetector(
                           onTap: () {
-                            // Navigate to signup
-                            // context.go('/signup');
+                            context.push(RouteNames.auth.signup);
                           },
                           child: Text(
-                            'Sign up for an account',
+                            context.l10n.sign_up_for_an_account,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
                               fontWeight: FontWeight.w700,

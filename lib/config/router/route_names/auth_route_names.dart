@@ -1,5 +1,5 @@
 class AuthRouteNames {
     String login = '/login';
-    String register = '/register';
+    String signup = '/signup';
     String forgotPassword = '/forgotPassword';
 }

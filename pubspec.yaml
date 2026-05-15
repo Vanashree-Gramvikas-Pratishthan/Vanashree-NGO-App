@@ -52,6 +52,11 @@ dependencies:
   intl: ^0.20.2
   flutter_riverpod: ^3.3.1
   flutter_svg: ^2.2.4
+  isar: ^3.1.0+1
+  path_provider: ^2.1.5
+  country_state_city_pro: ^0.0.6
+  searchable_dropdown_field:
+    path: ../searchable_dropdown_field
 
 dev_dependencies:
   flutter_test:
@@ -78,13 +83,15 @@ flutter_native_splash:
 
   android_12:
     color: "#dcdfcf"
-    icon_background_color: "#dcdfcf"
+    color_dark: "#dcdfcf"
 
     image: assets/logo.png
-
-    color_dark: "#dcdfcf"
-    icon_background_color_dark: "#dcdfcf"
     image_dark: assets/logo.png
+
+    icon_background_color: "#dcdfcf"
+    icon_background_color_dark: "#dcdfcf"
+
+    fullscreen: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -103,6 +110,7 @@ flutter:
     - lib/config/localization/l10n/
     - assets/
     - assets/icons/
+    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -129,3 +137,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+
+
+### command to generate native splash.
+# dart run flutter_native_splash:create

@@ -3,11 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:vanashree_ngo_application/features/localization/utils/language_code_enums.dart';
 
 import 'config/localization/l10n/app_localizations.dart';
 import 'config/router/app_router.dart';
 import 'config/theme/app_theme.dart';
 import 'config/theme/providers/theme_provider.dart';
+import 'core/common/constants/constants.dart';
+import 'core/locator.dart';
 import 'features/localization/presentation/providers/language_view_model.dart';
 
 void main() {
@@ -30,29 +33,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer(
-      builder: (context, ref, child) {
+      builder: (_, ref, _) {
         final localeState = ref.watch(languageViewModelProvider);
-        final locale = localeState.value != null
-            ? Locale(localeState.value!.code)
-            : const Locale('en');
+        final locale = Locale(localeState.value?.code ?? Constants.en);
         final theme = ref.watch(themeModeProvider);
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          title: 'Vanashree',
+          title: Constants.appName,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          supportedLocales: const [
-            Locale('en'), // English
-            Locale('hi'), // Hindi
-            Locale('mr'), // Marathi
-          ],
+          supportedLocales: LanguageCode.appLocales,
           locale: locale,
-          theme: AppTheme.lightTheme(),
-          darkTheme: AppTheme.darkTheme(),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           themeMode: theme,
           routerConfig: router,
         );
