@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:searchable_dropdown_field/searchable_dropdown_field.dart';
 import 'package:vanashree_ngo_application/core/common/components/app_textfield.dart';
@@ -12,79 +12,33 @@ import '../../../../core/common/constants/padding_constants.dart';
 import '../../../../core/extensions/build_context_extensions.dart';
 import '../../../../core/locator.dart';
 
-class SignUpView2 extends ConsumerStatefulWidget {
-  const SignUpView2({super.key});
-
-  @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SigninViewState();
-}
-
-class _SigninViewState extends ConsumerState<SignUpView2>
-    with TickerProviderStateMixin {
-  late final TextEditingController email,
-      mobile,
-      name,
-      city,
-      state,
-      country,
-      bioController;
-  late final PageController pageController;
-  int currentPage = 0;
-  late final GlobalKey<FormState> _formKey1, _formKey2, _formKey3;
-  late AnimationController _animationController;
-  late Animation<double> _progressAnimation;
-  double _currentProgress = 1 / 3;
-
-  @override
-  void initState() {
-    super.initState();
-    country = TextEditingController();
-    state = TextEditingController();
-    city = TextEditingController();
-    name = TextEditingController();
-    email = TextEditingController();
-    mobile = TextEditingController();
-    bioController = TextEditingController();
-    pageController = PageController(initialPage: 0);
-    _formKey1 = GlobalKey<FormState>();
-    _formKey2 = GlobalKey<FormState>();
-    _formKey3 = GlobalKey<FormState>();
-    _animationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _progressAnimation = Tween<double>(
-      begin: 1 / 3,
-      end: 1 / 3,
-    ).animate(_animationController);
-    _animationController.value = 1;
-  }
-
-  @override
-  void dispose() {
-    country.dispose();
-    state.dispose();
-    city.dispose();
-    name.dispose();
-    email.dispose();
-    mobile.dispose();
-    bioController.dispose();
-    pageController.dispose();
-    _formKey1.currentState?.dispose();
-    _formKey2.currentState?.dispose();
-    _formKey3.currentState?.dispose();
-    _animationController.dispose();
-    super.dispose();
-  }
+class SignUpView extends HookWidget {
+  const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final countryController = useTextEditingController();
+    final stateController = useTextEditingController();
+    final cityController = useTextEditingController();
+    final nameController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final mobileController = useTextEditingController();
+    final bioController = useTextEditingController();
+    final pageController = usePageController(initialPage: 0);
+    final currentPage = useState(0);
+
+    final formKey1 = useMemoized(() => GlobalKey<FormState>());
+    final formKey2 = useMemoized(() => GlobalKey<FormState>());
+    final formKey3 = useMemoized(() => GlobalKey<FormState>());
+
+    final progressValue = (currentPage.value + 1) / 3;
+
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              automaticallyImplyLeading: currentPage == 0,
+              automaticallyImplyLeading: currentPage.value == 0,
               backgroundColor: context.theme.scaffoldBackgroundColor,
               title: Text(
                 Constants.appName,
@@ -95,7 +49,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               ),
               actions: [
                 Text(
-                  'STEP ${(currentPage + 1).toString().padLeft(2, '0')} / 03      ',
+                  'STEP ${(currentPage.value + 1).toString().padLeft(2, '0')} / 03      ',
                   style: context.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -115,17 +69,18 @@ class _SigninViewState extends ConsumerState<SignUpView2>
                   Align(
                     alignment: Alignment.centerRight,
                     child: Text(
-                      '${((currentPage + 1) / 3 * 100).toInt()}% complete',
+                      '${(progressValue * 100).toInt()}% complete',
                       style: context.textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  AnimatedBuilder(
-                    animation: _progressAnimation,
-                    builder: (context, child) {
+                  TweenAnimationBuilder<double>(
+                    tween: Tween<double>(begin: 0, end: progressValue),
+                    duration: const Duration(milliseconds: 300),
+                    builder: (context, value, child) {
                       return LinearProgressIndicator(
-                        value: _progressAnimation.value,
+                        value: value,
                         backgroundColor: context.colorScheme.primary.withValues(
                           alpha: 0.3,
                         ),
@@ -145,27 +100,29 @@ class _SigninViewState extends ConsumerState<SignUpView2>
                 physics: const NeverScrollableScrollPhysics(),
                 controller: pageController,
                 onPageChanged: (page) {
-                  double newProgress = (page + 1) / 3;
-                  _progressAnimation =
-                      Tween<double>(
-                        begin: _currentProgress,
-                        end: newProgress,
-                      ).animate(
-                        CurvedAnimation(
-                          parent: _animationController,
-                          curve: Curves.easeInOut,
-                        ),
-                      );
-                  _animationController.forward(from: 0).then((_) {
-                    setState(() {
-                      _currentProgress = newProgress;
-                    });
-                  });
-                  setState(() {
-                    currentPage = page;
-                  });
+                  currentPage.value = page;
                 },
-                children: [_buildPage1(), _buildPage2(), _buildPage3()],
+                children: [
+                  _SignUpPage1(
+                    formKey: formKey1,
+                    nameController: nameController,
+                    emailController: emailController,
+                    mobileController: mobileController,
+                    pageController: pageController,
+                  ),
+                  _SignUpPage2(
+                    formKey: formKey2,
+                    countryController: countryController,
+                    stateController: stateController,
+                    cityController: cityController,
+                    pageController: pageController,
+                  ),
+                  _SignUpPage3(
+                    formKey: formKey3,
+                    bioController: bioController,
+                    pageController: pageController,
+                  ),
+                ],
               ),
             ),
           ],
@@ -173,12 +130,29 @@ class _SigninViewState extends ConsumerState<SignUpView2>
       ),
     );
   }
+}
 
-  Widget _buildPage1() {
+class _SignUpPage1 extends StatelessWidget {
+  const _SignUpPage1({
+    required this.formKey,
+    required this.nameController,
+    required this.emailController,
+    required this.mobileController,
+    required this.pageController,
+  });
+
+  final GlobalKey<FormState> formKey;
+  final TextEditingController nameController;
+  final TextEditingController emailController;
+  final TextEditingController mobileController;
+  final PageController pageController;
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: Paddings.kHorizontalPadding15,
       child: Form(
-        key: _formKey1,
+        key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -204,7 +178,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               ),
             ),
             AppTextField(
-              controller: name,
+              controller: nameController,
               hintText: 'Enter your name',
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -221,7 +195,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               ),
             ),
             AppTextField(
-              controller: email,
+              controller: emailController,
               hintText: 'nature@example.com',
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -238,7 +212,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               ),
             ),
             AppTextField(
-              controller: mobile,
+              controller: mobileController,
               hintText: '+1 (555) 000-0000',
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -286,7 +260,6 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               ),
             ),
             const Spacing.vertical(40),
-
             PrimaryButton(
               suffixIcon: Icons.arrow_forward,
               padding: Paddings.kVerticalPadding24,
@@ -296,7 +269,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               textColor: context.colorScheme.onPrimary,
               title: context.l10n.next_step,
               onPressed: () {
-                if (_formKey1.currentState?.validate() ?? false) {
+                if (formKey.currentState?.validate() ?? false) {
                   pageController.nextPage(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.ease,
@@ -312,12 +285,29 @@ class _SigninViewState extends ConsumerState<SignUpView2>
       ),
     );
   }
+}
 
-  Widget _buildPage2() {
+class _SignUpPage2 extends StatelessWidget {
+  const _SignUpPage2({
+    required this.formKey,
+    required this.countryController,
+    required this.stateController,
+    required this.cityController,
+    required this.pageController,
+  });
+
+  final GlobalKey<FormState> formKey;
+  final TextEditingController countryController;
+  final TextEditingController stateController;
+  final TextEditingController cityController;
+  final PageController pageController;
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: Paddings.kHorizontalPadding15,
       child: Form(
-        key: _formKey2,
+        key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -337,13 +327,13 @@ class _SigninViewState extends ConsumerState<SignUpView2>
             ),
             const Spacing.vertical(20),
             Text(
-                     context.l10n.country,
+              context.l10n.country,
               style: context.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
             SearchableDropdownTextField<String>(
-              controller: country,
+              controller: countryController,
               items: ["Nepal", "India", "USA", "UK", "Germany", "France"],
               itemAsString: (item) => item,
               hintText: "Select Country",
@@ -365,7 +355,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               ),
             ),
             SearchableDropdownTextField<String>(
-              controller: state,
+              controller: stateController,
               items: [
                 "Bagmati",
                 "Gandaki",
@@ -393,7 +383,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               ),
             ),
             SearchableDropdownTextField<String>(
-              controller: city,
+              controller: cityController,
               items: [
                 "Kathmandu",
                 "Pokhara",
@@ -431,7 +421,7 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               textColor: context.colorScheme.onPrimary,
               title: context.l10n.next_step,
               onPressed: () {
-                if (_formKey2.currentState?.validate() ?? false) {
+                if (formKey.currentState?.validate() ?? false) {
                   pageController.nextPage(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.ease,
@@ -460,12 +450,25 @@ class _SigninViewState extends ConsumerState<SignUpView2>
       ),
     );
   }
+}
 
-  Widget _buildPage3() {
+class _SignUpPage3 extends StatelessWidget {
+  const _SignUpPage3({
+    required this.formKey,
+    required this.bioController,
+    required this.pageController,
+  });
+
+  final GlobalKey<FormState> formKey;
+  final TextEditingController bioController;
+  final PageController pageController;
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: Paddings.kHorizontalPadding15,
       child: Form(
-        key: _formKey3,
+        key: formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -501,7 +504,6 @@ class _SigninViewState extends ConsumerState<SignUpView2>
                 return null;
               },
             ),
-
             const Spacing.vertical(50),
             PrimaryButton(
               shouldElevate: false,
@@ -522,14 +524,13 @@ class _SigninViewState extends ConsumerState<SignUpView2>
               title: context.l10n.complete_onboarding,
               suffixIcon: Icons.check_circle_outlined,
               onPressed: () {
-                if (_formKey3.currentState?.validate() ?? false) {
+                if (formKey.currentState?.validate() ?? false) {
                   appLog.info('Form is valid, submitting');
                 } else {
                   appLog.error('Form is invalid, please correct the errors');
                 }
               },
             ),
-
             const Spacing.vertical(20),
           ],
         ),
