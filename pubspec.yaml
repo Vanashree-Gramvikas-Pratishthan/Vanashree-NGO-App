@@ -58,6 +58,7 @@ dependencies:
   country_state_city_pro: ^0.0.6
   searchable_dropdown_field:
     path: ../searchable_dropdown_field
+  google_maps_flutter: ^2.17.1
 
 dev_dependencies:
   flutter_test:

@@ -103,21 +103,21 @@ class SignUpView extends HookWidget {
                   currentPage.value = page;
                 },
                 children: [
-                  _SignUpPage1(
+                  _PersonalInfoSection(
                     formKey: formKey1,
                     nameController: nameController,
                     emailController: emailController,
                     mobileController: mobileController,
                     pageController: pageController,
                   ),
-                  _SignUpPage2(
+                  _AddressInfoSection(
                     formKey: formKey2,
                     countryController: countryController,
                     stateController: stateController,
                     cityController: cityController,
                     pageController: pageController,
                   ),
-                  _SignUpPage3(
+                  _BioSection(
                     formKey: formKey3,
                     bioController: bioController,
                     pageController: pageController,
@@ -132,8 +132,8 @@ class SignUpView extends HookWidget {
   }
 }
 
-class _SignUpPage1 extends StatelessWidget {
-  const _SignUpPage1({
+class _PersonalInfoSection extends StatelessWidget {
+  const _PersonalInfoSection({
     required this.formKey,
     required this.nameController,
     required this.emailController,
@@ -287,8 +287,8 @@ class _SignUpPage1 extends StatelessWidget {
   }
 }
 
-class _SignUpPage2 extends StatelessWidget {
-  const _SignUpPage2({
+class _AddressInfoSection extends StatelessWidget {
+  const _AddressInfoSection({
     required this.formKey,
     required this.countryController,
     required this.stateController,
@@ -452,8 +452,8 @@ class _SignUpPage2 extends StatelessWidget {
   }
 }
 
-class _SignUpPage3 extends StatelessWidget {
-  const _SignUpPage3({
+class _BioSection extends StatelessWidget {
+  const _BioSection({
     required this.formKey,
     required this.bioController,
     required this.pageController,
