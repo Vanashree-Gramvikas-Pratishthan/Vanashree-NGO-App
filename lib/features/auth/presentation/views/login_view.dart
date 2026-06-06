@@ -161,6 +161,7 @@ class _LogInViewState extends ConsumerState<LogInView> {
                   suffixIcon: Icons.arrow_forward,
                   onPressed: () {
                     if (_formKey.currentState?.validate() ?? false) {
+                      context.go(RouteNames.homepage.main);
                       // Process login
                     }
                   },

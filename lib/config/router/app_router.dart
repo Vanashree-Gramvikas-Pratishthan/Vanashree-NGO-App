@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vanashree_ngo_application/config/router/routes/homepage_routes.dart';
 
 import '../../core/common/pages/error_page.dart';
 import '../../features/app_start/presentation/app_start_view.dart';
@@ -27,6 +28,7 @@ final router = GoRouter(
       builder: (context, state) => const LanguageView(),
     ),
     ...authRoutes,
+    ...homepageRoutes
     // ...errorRoutes,
   ],
   errorBuilder: (context, state) => ErrorPage(message: state.error!.message),

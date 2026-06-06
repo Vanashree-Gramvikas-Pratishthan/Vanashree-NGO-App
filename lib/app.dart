@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vanashree_ngo_application/config/localization/l10n/app_localizations.dart';
 import 'package:vanashree_ngo_application/config/router/app_router.dart';
 import 'package:vanashree_ngo_application/config/theme/app_theme.dart';
@@ -33,8 +33,8 @@ class App extends StatelessWidget {
             Locale('mr'), // Marathi
           ],
           locale: locale,
-          theme: AppTheme.lightTheme(),
-          darkTheme: AppTheme.darkTheme(),
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           themeMode: ref.watch(themeModeProvider),
           routerConfig: router,
         );
