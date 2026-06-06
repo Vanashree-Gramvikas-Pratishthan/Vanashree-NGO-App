@@ -1,6 +1,6 @@
 import 'package:vanashree_ngo_application/features/app_start/domain/repositories/app_start_repository.dart';
 
-import 'app_start_storage.dart';
+import '../data_sources/app_start_storage.dart';
 
 class AppStartRepositoryImpl implements AppStartRepository {
   final IAppStartStorage _storage;

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:vanashree_ngo_application/core/common/services/secure_storage_service.dart';
-import 'package:vanashree_ngo_application/features/app_start/data/app_start_repository.dart';
-import 'package:vanashree_ngo_application/features/app_start/data/app_start_storage.dart';
+import 'package:vanashree_ngo_application/features/app_start/data/repositories/app_start_repository_impl.dart';
+import 'package:vanashree_ngo_application/features/app_start/data/data_sources/app_start_storage.dart';
 import 'package:vanashree_ngo_application/features/app_start/domain/checks/app_start_checker.dart';
 import 'package:vanashree_ngo_application/features/app_start/domain/checks/onboarding_check.dart';
 import 'package:vanashree_ngo_application/features/app_start/domain/repositories/app_start_repository.dart';

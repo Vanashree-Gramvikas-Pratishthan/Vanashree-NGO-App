@@ -151,7 +151,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
-
 /// A production-safe singleton logger built on top of the `logger` package.
 ///
 /// This logger provides:
@@ -239,20 +238,25 @@ class AppLogger {
   AppLogger._internal() {
     _logger = Logger(
       printer: PrettyPrinter(
-          methodCount: 2,
-          errorMethodCount: 5,
-          lineLength: 120,
-          colors: true,
-          printEmojis: true,
-          dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart),
+        methodCount: 2,
+        errorMethodCount: 5,
+        lineLength: 120,
+        colors: true,
+        printEmojis: true,
+        dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
+      ),
     );
   }
 
   late final Logger _logger;
   final StringBuffer _logBuffer = StringBuffer();
 
-  void _logToBuffer(String level, String message,
-      [dynamic error, StackTrace? stackTrace]) {
+  void _logToBuffer(
+    String level,
+    String message, [
+    dynamic error,
+    StackTrace? stackTrace,
+  ]) {
     _logBuffer.writeln('${DateTime.now()}: $level - $message');
     if (error != null) {
       _logBuffer.writeln('Error: $error');
@@ -264,32 +268,32 @@ class AppLogger {
 
   void debug(String message, [dynamic error, StackTrace? stackTrace]) {
     _logToBuffer('DEBUG', message, error, stackTrace);
-    _logger.d(message, error:error, stackTrace: stackTrace);
+    _logger.d(message, error: error, stackTrace: stackTrace);
   }
 
   void info(String message, [dynamic error, StackTrace? stackTrace]) {
     _logToBuffer('INFO', message, error, stackTrace);
-    _logger.i(message, error:error, stackTrace: stackTrace);
+    _logger.i(message, error: error, stackTrace: stackTrace);
   }
 
   void warning(String message, [dynamic error, StackTrace? stackTrace]) {
     _logToBuffer('WARNING', message, error, stackTrace);
-    _logger.w(message, error:error, stackTrace: stackTrace);
+    _logger.w(message, error: error, stackTrace: stackTrace);
   }
 
   void error(String message, [dynamic error, StackTrace? stackTrace]) {
     _logToBuffer('ERROR', message, error, stackTrace);
-    _logger.e(message, error:error, stackTrace: stackTrace);
+    _logger.e(message, error: error, stackTrace: stackTrace);
   }
 
   void verbose(String message, [dynamic error, StackTrace? stackTrace]) {
     _logToBuffer('TRACE', message, error, stackTrace);
-    _logger.t(message, error:error, stackTrace: stackTrace);
+    _logger.t(message, error: error, stackTrace: stackTrace);
   }
 
   void wtf(String message, [dynamic error, StackTrace? stackTrace]) {
     _logToBuffer('FATAL', message, error, stackTrace);
-    _logger.f(message, error:error, stackTrace: stackTrace);
+    _logger.f(message, error: error, stackTrace: stackTrace);
   }
 
   void print(String message, [dynamic error, StackTrace? stackTrace]) {

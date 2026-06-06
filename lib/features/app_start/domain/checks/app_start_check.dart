@@ -7,4 +7,3 @@ abstract interface class AppStartCheck {
   /// Returns null if this check doesn't apply and should continue to next check
   Future<AppStartState?> execute();
 }
-

@@ -1,5 +1,5 @@
-import '../../../core/common/constants/secure_storage_constants.dart';
-import '../../../core/common/services/secure_storage_service.dart';
+import 'package:vanashree_ngo_application/core/common/constants/secure_storage_constants.dart';
+import 'package:vanashree_ngo_application/core/common/services/secure_storage_service.dart';
 
 abstract interface class IAppStartStorage {
   Future<bool> loadOnboardingStatus();

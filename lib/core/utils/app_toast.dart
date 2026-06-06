@@ -79,7 +79,7 @@ class AppToast {
   static void showInfo(
     BuildContext context, {
     String message = 'Info! Please check the details.',
-    IconData? icon
+    IconData? icon,
   }) {
     showToast(context, message, icon, ToastType.info);
   }
@@ -149,9 +149,5 @@ Color _getBackgroundColor(ToastType type) {
       return Colors.orange.withValues(alpha: 0.8); // Orange for warning
     case ToastType.info:
       return Colors.blue.withValues(alpha: 0.8); // Blue for info
-    default:
-      return Colors.black.withValues(
-        alpha: 0.8,
-      ); // Default black for unknown types
   }
 }

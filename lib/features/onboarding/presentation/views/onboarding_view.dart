@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vanashree_ngo_application/config/router/route_names/route_names.dart';
 import 'package:vanashree_ngo_application/features/app_start/presentation/providers/app_start_view_model.dart';
+import 'package:vanashree_ngo_application/features/onboarding/presentation/providers/onboarding_page_provider.dart';
 
-class OnboardingView extends ConsumerStatefulWidget {
+class OnboardingView extends HookConsumerWidget {
   const OnboardingView({super.key});
-
-  @override
-  ConsumerState<OnboardingView> createState() => _OnboardingViewState();
-}
-
-class _OnboardingViewState extends ConsumerState<OnboardingView> {
-  final PageController _pageController = PageController();
-  int _currentPage = 0;
 
   final List<_OnboardingScreen> _screens = const [
     _OnboardingScreen(
@@ -36,42 +30,39 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
     ),
   ];
 
-  void _goToNextPage() {
-    if (_currentPage < _screens.length - 1) {
-      _pageController.nextPage(
+  void _goToNextPage(BuildContext context, WidgetRef ref, PageController pageController, int currentPage) {
+    if (currentPage < _screens.length - 1) {
+      pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
       return;
     }
 
-    _completeOnboarding();
+    _completeOnboarding(context, ref);
   }
 
-  Future<void> _completeOnboarding() async {
+  Future<void> _completeOnboarding(BuildContext context, WidgetRef ref) async {
     await ref.read(appStartViewModelProvider.notifier).completeOnboarding();
     if (!mounted) return;
     context.go(RouteNames.auth.login);
   }
 
-  void _skipOnboarding() {
-    _completeOnboarding();
+  void _skipOnboarding(BuildContext context, WidgetRef ref) {
+    _completeOnboarding(context, ref);
   }
 
   @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final pageController = usePageController();
+    final currentPage = ref.watch(onboardingPageProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Welcome'),
         actions: [
-          TextButton(onPressed: _skipOnboarding, child: const Text('Skip')),
+          TextButton(onPressed: () => _skipOnboarding(context, ref), child: const Text('Skip')),
         ],
       ),
       body: SafeArea(
@@ -79,11 +70,9 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
           children: [
             Expanded(
               child: PageView.builder(
-                controller: _pageController,
+                controller: pageController,
                 itemCount: _screens.length,
-                onPageChanged: (index) => setState(() {
-                  _currentPage = index;
-                }),
+                onPageChanged: (index) => ref.read(onboardingPageProvider.notifier).setPage(index),
                 itemBuilder: (context, index) {
                   final screen = _screens[index];
                   return Padding(
@@ -140,10 +129,10 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
                       (index) => AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         margin: const EdgeInsets.symmetric(horizontal: 6),
-                        width: _currentPage == index ? 24 : 10,
+                        width: currentPage == index ? 24 : 10,
                         height: 10,
                         decoration: BoxDecoration(
-                          color: _currentPage == index
+                          color: currentPage == index
                               ? theme.colorScheme.primary
                               : theme.colorScheme.onSurface.withValues(
                                   alpha: 0.24,
@@ -157,9 +146,9 @@ class _OnboardingViewState extends ConsumerState<OnboardingView> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _goToNextPage,
+                      onPressed: () => _goToNextPage(context, ref, pageController, currentPage),
                       child: Text(
-                        _currentPage == _screens.length - 1
+                        currentPage == _screens.length - 1
                             ? 'Get Started'
                             : 'Next',
                       ),
