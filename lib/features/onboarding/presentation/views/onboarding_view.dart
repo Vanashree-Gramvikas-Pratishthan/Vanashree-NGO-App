@@ -30,7 +30,12 @@ class OnboardingView extends HookConsumerWidget {
     ),
   ];
 
-  void _goToNextPage(BuildContext context, WidgetRef ref, PageController pageController, int currentPage) {
+  void _goToNextPage(
+    BuildContext context,
+    WidgetRef ref,
+    PageController pageController,
+    int currentPage,
+  ) {
     if (currentPage < _screens.length - 1) {
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -45,7 +50,7 @@ class OnboardingView extends HookConsumerWidget {
   Future<void> _completeOnboarding(BuildContext context, WidgetRef ref) async {
     await ref.read(appStartViewModelProvider.notifier).completeOnboarding();
     if (!context.mounted) return;
-    context.go(RouteNames.language);
+    context.go(RouteNames.auth.login);
   }
 
   void _skipOnboarding(BuildContext context, WidgetRef ref) {
@@ -62,7 +67,10 @@ class OnboardingView extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text('Welcome'),
         actions: [
-          TextButton(onPressed: () => _skipOnboarding(context, ref), child: const Text('Skip')),
+          TextButton(
+            onPressed: () => _skipOnboarding(context, ref),
+            child: const Text('Skip'),
+          ),
         ],
       ),
       body: SafeArea(
@@ -72,7 +80,8 @@ class OnboardingView extends HookConsumerWidget {
               child: PageView.builder(
                 controller: pageController,
                 itemCount: _screens.length,
-                onPageChanged: (index) => ref.read(onboardingPageProvider.notifier).setPage(index),
+                onPageChanged: (index) =>
+                    ref.read(onboardingPageProvider.notifier).setPage(index),
                 itemBuilder: (context, index) {
                   final screen = _screens[index];
                   return Padding(
@@ -146,7 +155,12 @@ class OnboardingView extends HookConsumerWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => _goToNextPage(context, ref, pageController, currentPage),
+                      onPressed: () => _goToNextPage(
+                        context,
+                        ref,
+                        pageController,
+                        currentPage,
+                      ),
                       child: Text(
                         currentPage == _screens.length - 1
                             ? 'Get Started'

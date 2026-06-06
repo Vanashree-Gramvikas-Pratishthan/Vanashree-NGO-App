@@ -100,7 +100,6 @@ To add a new check (e.g., Maintenance Check), follow these steps:
    ```
 */
 
-// Individual checks
 final onboardingCheckProvider = Provider<AppStartCheck>((ref) {
   final getOnboardingStatusUseCase = ref.watch(
     getOnboardingStatusUseCaseProvider,

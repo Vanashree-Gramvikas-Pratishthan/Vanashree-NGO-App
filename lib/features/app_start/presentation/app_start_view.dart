@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vanashree_ngo_application/config/router/route_names/route_names.dart';
 
+import '../../../core/locator.dart';
 import '../utils/app_start_enums.dart';
 import 'providers/app_start_view_model.dart';
 
@@ -17,6 +18,7 @@ class _AppStartViewState extends ConsumerState<AppStartView> {
   @override
   void initState() {
     super.initState();
+    setupLocator();
   }
 
   @override
@@ -43,7 +45,7 @@ class _AppStartViewState extends ConsumerState<AppStartView> {
               //   context.go(RouteNames.noInternet);
               //   break;
               default:
-                context.go(RouteNames.language);
+                context.go(RouteNames.auth.login);
             }
           });
         },

@@ -3,12 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:vanashree_ngo_application/config/router/route_names/route_names.dart';
 import 'package:vanashree_ngo_application/features/app_start/utils/app_start_enums.dart';
 
-/// Service to handle app start navigation based on app state
 abstract interface class AppStartNavigationService {
   void navigateBasedOnState(BuildContext context, AppStartState state);
 }
 
-/// Implementation of app start navigation service
 class AppStartNavigationServiceImpl implements AppStartNavigationService {
   @override
   void navigateBasedOnState(BuildContext context, AppStartState state) {
@@ -23,11 +21,11 @@ class AppStartNavigationServiceImpl implements AppStartNavigationService {
       case AppStartState.onboarding:
         return RouteNames.onboarding;
       case AppStartState.unauthenticated:
-        return RouteNames.language; // For now, go to language selection
+        return RouteNames.auth.login; 
       case AppStartState.authenticated:
-        return RouteNames.language; // For now, go to language selection
+        return RouteNames.auth.login; 
       case AppStartState.noInternet:
-        return RouteNames.language; // For now, go to language selection
+        return RouteNames.auth.login; 
     }
   }
 }

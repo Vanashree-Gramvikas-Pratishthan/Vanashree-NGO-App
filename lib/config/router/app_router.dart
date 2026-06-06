@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vanashree_ngo_application/config/router/routes/homepage_routes.dart';
 
 import '../../core/common/pages/error_page.dart';
 import '../../features/app_start/presentation/app_start_view.dart';
 import '../../features/localization/presentation/views/language_view.dart';
 import '../../features/onboarding/presentation/views/onboarding_view.dart';
 import 'route_names/route_names.dart';
+import 'routes/auth_routes.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -25,6 +27,9 @@ final router = GoRouter(
       path: RouteNames.language,
       builder: (context, state) => const LanguageView(),
     ),
+    ...authRoutes,
+    ...homepageRoutes
+    // ...errorRoutes,
   ],
   errorBuilder: (context, state) => ErrorPage(message: state.error!.message),
 );
